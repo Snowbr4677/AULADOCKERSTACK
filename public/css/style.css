@@ -1,0 +1,33 @@
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 30px;
+        }
+
+        th {
+            background: #fa1111;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        input {
+            padding: 5px;
+        }
+
+        button {
+            padding: 6px 10px;
+        }
