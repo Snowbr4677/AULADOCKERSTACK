@@ -10,7 +10,7 @@ RUN apk add --no-cache \
     git
 
 # Instalar extensões do PHP necessárias (pdo e opcache já vêm nativas no PHP 8.5)
-RUN docker-php-ext-install pdo_mysql intl zip
+RUN docker-php-ext-install mysqli pdo_mysql intl zip
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
