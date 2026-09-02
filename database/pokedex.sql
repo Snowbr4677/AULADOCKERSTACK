@@ -1,4 +1,4 @@
-use dbpokedex;
+use dbPokedex;
 
 create table pokemon(
 pokemon_id int auto_increment primary key,
