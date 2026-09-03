@@ -17,11 +17,11 @@ if ($conn->connect_error) {
 $busca = "";
 if (isset($_GET['buscar'])) {
     $busca = $conn->real_escape_string($_GET['buscar']);
-    $sql = "SELECT pokemon_id, nome, altura, peso, descricao FROM pokemon
+    $sql = "SELECT pokemon_id, nome, altura, peso, descricao, imagem FROM pokemon
     WHERE nome LIKE '%busca%'
     ORDER BY pokemon_id ASC";
 } else{
-    $sql = "SELECT pokemon_id, nome, altura, peso, descricao FROM pokemon ORDER BY pokemon_id ASC";
+    $sql = "SELECT pokemon_id, nome, altura, peso, descricao, imagem FROM pokemon ORDER BY pokemon_id ASC";
 }
 $result = $conn->query($sql);
 echo "Conexão com o banco foi bem sucedido yeaaa!";
@@ -47,32 +47,59 @@ echo "Conexão com o banco foi bem sucedido yeaaa!";
 
     <br>
 
-    <table>
+    <table border="1">
         <tr>
-            <th>Id</th>
+            <th>ID</th>
+            <th>Imagem</th>
             <th>Nome</th>
-            <th>Altura (m)</th>
-            <th>Peso(kg)</th>
+            <th>Altura</th>
+            <th>Peso</th>
             <th>Descrição</th>
         </tr>
-        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<?php echo $row['pokemon_id']; ?>.png" width="50">
+
         <?php
         if ($result->num_rows > 0) {
+
             while ($row = $result->fetch_assoc()) {
+
                 echo "<tr>";
+
                 echo "<td>" . htmlspecialchars($row["pokemon_id"]) . "</td>";
-                // Primeira letra em maiúsculo para o nome ficar bonito
-                echo "<td><strong>" . ucfirst(htmlspecialchars($row["nome"])) . "</strong></td>";
-                echo "<td>" . number_format($row["altura"], 2, ',', '.') . " m</td>";
-                echo "<td>" . number_format($row["peso"], 1, ',', '.') . " kg</td>";
-                echo "<td>" . htmlspecialchars($row["descricao"]) . "</td>";
+            
+                $nome = strtolower($row["nome"]);
+                $nome = strtolower($row["nome"]);
+
+                $json = file_get_contents(
+                    "https://pokeapi.co/api/v2/pokemon/$nome"
+                );
+
+                $dados = json_decode($json, true);
+
+                $imagem = $dados["sprites"]["front_default"];
+
+                echo "<td><img src='$imagem' width='100' alt=''> </td>";
+                echo "<td>". htmlspecialchars($row["nome"]) ."</td>";
+                
+                echo "<td>" . number_format($row["altura"], 2, ',', '.') . "m</td>";
+                
+                echo "<td>" .
+                    number_format($row["peso"], 1, ',', '.') .
+                    " kg</td>";
+
+                echo "<td>" .
+                    htmlspecialchars($row["descricao"]) .
+                    "</td>";
+            
                 echo "</tr>";
-            }
+        }
         } else {
-            echo "<tr><td colspan='5'>Nenhum pokemon encontrado</td></tr>";
+
+            echo "<tr>";
+            echo "<td colspan='6'>Nenhum Pokémon encontrado.</td>";
+            echo "</tr>";
+
         }
         ?>
-
     </table>
 
 </body>

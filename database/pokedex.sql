@@ -5,7 +5,8 @@ pokemon_id int auto_increment primary key,
 nome varchar(50),
 altura decimal(4,2),
 peso decimal(5,1),
-descricao text
+descricao text,
+imagem varchar(255)
 );
 INSERT INTO pokemon VALUES(1, "Treecko", 0.50, 5.0, "Possui pequenos ganchos na sola dos pés que o permitem andar em paredes e tetos. Ataca batendo sua cauda forte.");
 INSERT INTO pokemon VALUES(2, "Grovyle", 0.90, 21.6, "As folhas que crescem em seu corpo são uma ótima camuflagem na floresta. É um mestre em saltar de galho em galho.");
